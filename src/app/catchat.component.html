@@ -1,8 +1,14 @@
 <div>Cat Chat!</div>
 <div class="message-container">
-    <div class="message" *ngFor="let msg of messages">
+    <div class="message" *ngFor="let msg of messages | async">
         <gravatar [author]="msg.author"></gravatar>
         <div class="author">{{msg.author | format: 'name'}}</div>
         <div class="text">{{msg.text}}</div>
     </div>
+</div>
+<div class="input-container">
+    <form (submit)="sendMessage(model)">
+        <textarea [(ngModel)]="model" placeholder="Enter your message"></textarea>
+        <button type="submit">Send</button>
+    </form>
 </div>

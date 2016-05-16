@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+
+import { AngularFire, FirebaseListObservable } from 'angularfire2';
+
 import { Author, Message } from './shared/interfaces';
 import { GravatarComponent } from './shared/gravatar';
 import { Format } from './shared';
@@ -14,11 +17,16 @@ import { Format } from './shared';
 })
 export class CatchatAppComponent {
 
-  messages: Message[];
+  //messages: Message[];
+  messages: FirebaseListObservable<any[]>;
+  model: string;
   title: string;
 
-  constructor() {
+  constructor(af: AngularFire) {
     this.title = 'catchat works!';
+    this.messages = af.database.list('/messages', {query: {limitToLast: 20}});
+    this.model = ""
+    /*
     this.messages = [
       {
         author: {
@@ -35,5 +43,11 @@ export class CatchatAppComponent {
         text: 'How are you doing today?!'
       }
     ];
+    */
+  }
+  
+  sendMessage(message: string) {
+      console.log("Sending message", message);
+      this.model = "";
   }
 }
