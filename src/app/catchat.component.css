@@ -1,0 +1,35 @@
+.message-container {
+    background-color: green;
+    border: 1px solid #ccc;
+    margin: 2em;
+}
+
+.message {
+    background-color: #fefefe;
+    padding: 1em;
+}
+
+.message:nth-child(odd) {
+    background-color: #f8f8f8;
+}
+
+.message > div {
+    display: inline-block;
+    line-height: 2em;
+    vertical-align: middle;
+}
+
+.message .avatar {
+    width: 64px;
+}
+
+.message .author {
+    font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 128px;
+}
+
+.message .text {
+    
+}
