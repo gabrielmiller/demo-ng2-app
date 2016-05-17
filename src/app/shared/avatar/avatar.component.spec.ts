@@ -9,25 +9,25 @@ import {
 import { ComponentFixture, TestComponentBuilder } from '@angular/compiler/testing';
 import { Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { GravatarComponent } from './gravatar.component';
+import { AvatarComponent } from './avatar.component';
 
-describe('Component: Gravatar', () => {
+describe('Component: Avatar', () => {
   let builder: TestComponentBuilder;
 
-  beforeEachProviders(() => [GravatarComponent]);
+  beforeEachProviders(() => [AvatarComponent]);
   beforeEach(inject([TestComponentBuilder], function (tcb: TestComponentBuilder) {
     builder = tcb;
   }));
 
-  it('should inject the component', inject([GravatarComponent],
-      (component: GravatarComponent) => {
+  it('should inject the component', inject([AvatarComponent],
+      (component: AvatarComponent) => {
     expect(component).toBeTruthy();
   }));
 
   it('should create the component', inject([], () => {
-    return builder.createAsync(GravatarComponentTestController)
+    return builder.createAsync(AvatarComponentTestController)
       .then((fixture: ComponentFixture<any>) => {
-        let query = fixture.debugElement.query(By.directive(GravatarComponent));
+        let query = fixture.debugElement.query(By.directive(AvatarComponent));
         expect(query).toBeTruthy();
         expect(query.componentInstance).toBeTruthy();
       });
@@ -37,10 +37,10 @@ describe('Component: Gravatar', () => {
 @Component({
   selector: 'test',
   template: `
-    <gravatar></gravatar>
+    <avatar></avatar>
   `,
-  directives: [GravatarComponent]
+  directives: [AvatarComponent]
 })
-class GravatarComponentTestController {
+class AvatarComponentTestController {
 }
 

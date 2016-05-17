@@ -1,14 +1,16 @@
+// Core
 import { Component } from '@angular/core';
 
+// AngularFire2
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 
+// Internal
 import { Author, Message } from './shared/interfaces';
-import { GravatarComponent } from './shared/gravatar';
+import { AvatarComponent } from './shared/avatar';
 import { Format } from './shared';
 
 @Component({
-
-  directives: [GravatarComponent],
+  directives: [AvatarComponent],
   moduleId: module.id,
   pipes: [Format],
   selector: 'catchat-app',
@@ -16,38 +18,34 @@ import { Format } from './shared';
   templateUrl: 'catchat.component.html'
 })
 export class CatchatAppComponent {
-
-  //messages: Message[];
+  author: Author;
   messages: FirebaseListObservable<any[]>;
   model: string;
-  title: string;
 
-  constructor(af: AngularFire) {
-    this.title = 'catchat works!';
+  constructor(public af: AngularFire) {
+    this.author = {
+       first: this.randomWord(5),
+       last: this.randomWord(8)
+    };
+    this.af = af;
     this.messages = af.database.list('/messages', {query: {limitToLast: 20}});
     this.model = ""
-    /*
-    this.messages = [
-      {
-        author: {
-          first: 'System',
-          last: ''
-        },
-        text: 'Welcome to cat chat!'
-      },
-      {
-        author: {
-          first: 'System',
-          last: 'Test'
-        },
-        text: 'How are you doing today?!'
-      }
-    ];
-    */
+  }
+  
+  randomWord(length: number) : string {
+    let i = length;
+    let letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    let word = "";
+    while (--i) {
+      let o = Math.random() * letters.length;
+      word += letters.slice(o, o+1);
+    }
+    return word;
   }
   
   sendMessage(message: string) {
-      console.log("Sending message", message);
-      this.model = "";
+    let m = this.model;
+    this.model = "";
+    return this.af.database.list('/messages').push({ author : this.author, text: m });
   }
 }
