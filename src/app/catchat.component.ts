@@ -23,11 +23,11 @@ export class CatchatAppComponent {
   model: string;
 
   constructor(public af: AngularFire) {
+    this.af = af;
     this.author = {
        first: this.randomWord(5),
        last: this.randomWord(8)
     };
-    this.af = af;
     this.messages = af.database.list('/messages', {query: {limitToLast: 20}});
     this.model = ""
   }
