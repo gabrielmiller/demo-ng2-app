@@ -7,12 +7,13 @@ import { AngularFire, FirebaseListObservable } from 'angularfire2';
 // Internal
 import { Author, Message } from './shared/interfaces';
 import { AvatarComponent } from './shared/avatar';
-import { Format } from './shared';
+import { Format, CatService } from './shared';
 
 @Component({
   directives: [AvatarComponent],
   moduleId: module.id,
   pipes: [Format],
+  providers: [CatService],
   selector: 'catchat-app',
   styleUrls: ['catchat.component.css'],
   templateUrl: 'catchat.component.html'
@@ -22,25 +23,16 @@ export class CatchatAppComponent {
   messages: FirebaseListObservable<any[]>;
   model: string;
 
-  constructor(public af: AngularFire) {
-    this.af = af;
+  constructor(public af: AngularFire, public cs: CatService) {
+    this.messages = af.database.list('/messages', {query: {limitToLast: 4}});
+    this.model = "";
+    
+    let id = Math.ceil(Math.random() * 8);
+    
     this.author = {
-       first: this.randomWord(5),
-       last: this.randomWord(8)
+       id: id,
+       name: this.cs.getName(id)
     };
-    this.messages = af.database.list('/messages', {query: {limitToLast: 20}});
-    this.model = ""
-  }
-  
-  randomWord(length: number) : string {
-    let i = length;
-    let letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    let word = "";
-    while (--i) {
-      let o = Math.random() * letters.length;
-      word += letters.slice(o, o+1);
-    }
-    return word;
   }
   
   sendMessage(message: string) {

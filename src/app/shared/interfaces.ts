@@ -1,6 +1,6 @@
 export interface Author {
-  first: string
-  last: string
+  id: number
+  name: string
 }
 
 export interface Message {

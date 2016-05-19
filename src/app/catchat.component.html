@@ -1,8 +1,10 @@
 <div class="message-container">
     <div class="message" *ngFor="let msg of messages | async">
         <avatar [author]="msg.author"></avatar>
-        <div class="author">{{msg.author | format: 'name'}}</div>
-        <div class="text">{{msg.text}}</div>
+        <div class="text-wrapper">
+            <p class="author">{{ msg.author | format: 'name'}}</p>
+            <p title="{{msg.text}}">{{msg.text | format: 'cat'}}</p>
+        </div>
     </div>
 </div>
 <div class="input-container">
